@@ -2,63 +2,47 @@ package com.example.mytestingapp.ui.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mytestingapp.domain.Calculator
 
 class MainActivityViewModel : ViewModel() {
 
   val num1 = MutableLiveData<Int>()
   val num2 = MutableLiveData<Int>()
 
+  lateinit var calculator: Calculator
+
   init {
     num1.value = 0
     num2.value = 0
+    calculator = Calculator()
   }
 
-  private var _result = 0
-  val result: Int
-    get() = _result
-  private var _operation = Operation.NONE
-  val operation: Operation
-    get() = _operation
+  var result = 0
+  var operation = Operation.NONE
 
   fun acceptOperation(operation: Operation) {
-    _operation = operation
+    this@MainActivityViewModel.operation = operation
   }
 
   fun calculate(): Int {
-    _result = when (_operation) {
+    result = when (operation) {
       Operation.ADDITION -> {
-        sum(num1.value!!, num2.value!!)
+        calculator.add(num1.value!!, num2.value!!)
       }
       Operation.SUBTRACT -> {
-        subtract(num1.value!!, num2.value!!)
+        calculator.diff(num1.value!!, num2.value!!)
       }
       Operation.MULTIPLICATION -> {
-        multiply(num1.value!!, num2.value!!)
+        calculator.mul(num1.value!!, num2.value!!)
       }
       Operation.DIVISION -> {
-        divide(num1.value!!, num2.value!!)
+        calculator.div(num1.value!!, num2.value!!)
       }
       else -> {
         0
       }
     }
     return result
-  }
-
-  private fun sum(a: Int, b: Int): Int {
-    return a + b
-  }
-
-  private fun subtract(a: Int, b: Int): Int {
-    return a - b
-  }
-
-  private fun multiply(a: Int, b: Int): Int {
-    return a * b
-  }
-
-  private fun divide(a: Int, b: Int): Int {
-    return a / b
   }
 
   enum class Operation {

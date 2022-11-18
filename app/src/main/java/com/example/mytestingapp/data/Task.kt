@@ -15,5 +15,5 @@ data class Task @JvmOverloads constructor(
     get() = title.isEmpty() || description.isEmpty()
 
   val titleForList: String
-    get() = if (title.isNotEmpty()) title else description
+    get() = title.ifEmpty { description }
 }
