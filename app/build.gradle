@@ -51,7 +51,7 @@ android {
   kover {
     filters {
       classes {
-        excludes.addAll("androidx.*", "*.generated.*", "*.databinding.*")
+        excludes.addAll("androidx.*", "*.generated.*", "*.databinding.*","*.data.*")
       }
     }
   }
